@@ -1,3 +1,5 @@
+import { useListener } from "@/hooks/use-automations";
+import TriggerButton from "../trigger-button";
 
 
 type Props={
@@ -5,8 +7,9 @@ type Props={
 }
 
 export default function  ThenNode({id}:Props){
-    const {}=useListener(id);
+  // hook used to setListener and update it in db using zod form
+    const {onSetListener,listener,onFormSubmit,register,isPending}=useListener(id);
     return (
-        <div>Then Action</div>
+        <TriggerButton label="Then">asdf</TriggerButton>
     )
 }

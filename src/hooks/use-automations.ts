@@ -3,6 +3,7 @@ import useMutationData from "./use-mutation-data";
 import { useEffect, useRef, useState } from "react";
 import {z} from 'zod'; 
 import useZodForm from "./use-zod-form";
+import { list } from "postcss";
 
 
 export default  function useCreateAutomation(id?:string){
@@ -70,5 +71,8 @@ export function useListener(id:string){
     })
 // mutation used to add event listener
     const {isPending,mutate}=useMutationData(['create-lister'],(data:{prompt:string,reply:string})=>saveListener(id,listener,data.prompt,data.reply),"automation-info");
-    const {}=useZodForm()
+    const {errors,onFormSubmit,register,reset,watch}=useZodForm(promptSchema,mutate);
+    // function used to setListener to a specific type
+    const onSetListener=(type:'SMARTAI' | 'MESSAGE')=>setListener(type)
+    return {onSetListener,register,onFormSubmit,listener,isPending}
 }
