@@ -1,4 +1,5 @@
 import { getAllAutomations, getAutomationInfo } from "@/actions/automations";
+import { onUserInfo } from "@/actions/user";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -15,5 +16,12 @@ export function useQueryAutomation(id:string){
     return useQuery({
         queryKey:['automation-info'],
         queryFn:()=>getAutomationInfo(id)
+    })
+}
+// hook used to get the user profile info
+export function useQueryUser(){
+    return useQuery({
+        queryKey:['user-profile'],
+        queryFn:onUserInfo
     })
 }

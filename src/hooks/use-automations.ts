@@ -1,9 +1,12 @@
-import { createAutomations, saveListener, updateAutomatioName } from "@/actions/automations";
+import { createAutomations, deleteKeyword, saveKeyword, saveListener, saveTrigger, updateAutomatioName } from "@/actions/automations";
 import useMutationData from "./use-mutation-data";
 import { useEffect, useRef, useState } from "react";
 import {z} from 'zod'; 
 import useZodForm from "./use-zod-form";
 import { list } from "postcss";
+import { AppDispatch, useAppSelector } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { TRIGGER } from "@/redux/slices/automation";
 
 
 export default  function useCreateAutomation(id?:string){
@@ -76,3 +79,51 @@ export function useListener(id:string){
     const onSetListener=(type:'SMARTAI' | 'MESSAGE')=>setListener(type)
     return {onSetListener,register,onFormSubmit,listener,isPending}
 }
+
+// hook used to aadd trigger
+export const useTriggers = (id: string) => {
+    const types = useAppSelector((state) => state.AutmationReducer.trigger?.types)
+  
+    const dispatch: AppDispatch = useDispatch()
+  
+    const onSetTrigger = (type: 'COMMENT' | 'DM') =>
+      dispatch(TRIGGER({ trigger: { type } }))
+  
+    const { isPending, mutate } = useMutationData(
+      ['add-trigger'],
+      (data: { types: string[] }) => saveTrigger(id, data.types),
+      'automation-info'
+    )
+  
+    const onSaveTrigger = () => mutate({ types })
+    return { types, onSetTrigger, onSaveTrigger, isPending }
+  }
+
+  export const useKeywords = (id: string) => {
+    const [keyword, setKeyword] = useState('')
+    const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+      setKeyword(e.target.value)
+//   function to save a keyword name
+    const { mutate } = useMutationData(
+      ['add-keyword'],
+      (data: { keyword: string }) => saveKeyword(id, data.keyword),
+      'automation-info',
+      () => setKeyword('')
+    )
+//   the function to save a keyword name will be called when we click on Enter
+    const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        mutate({ keyword })
+        setKeyword('')
+      }
+    }
+//   function to delete a word when we call deleteMutation given keyword Id
+    const { mutate: deleteMutation } = useMutationData(
+      ['delete-keyword'],
+      (data: { id: string }) => deleteKeyword(data.id),
+      'automation-info'
+    )
+  
+    return { keyword, onValueChange, onKeyPress, deleteMutation }
+  }
+  

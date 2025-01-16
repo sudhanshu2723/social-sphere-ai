@@ -1,7 +1,7 @@
 'use server'
 
 import { onCurrentUser } from "../user"
-import { addListener, createAutomation, findAutomation, getAutomations, updateAutomation } from "./queries";
+import { addKeyWord, addListener, addTrigger, createAutomation, deleteKeywordQuery, findAutomation, getAutomations, updateAutomation } from "./queries";
 
 
 // function used to create new Automations
@@ -80,3 +80,47 @@ export async function saveListener(automationId:string,listener:'SMARTAI' | 'MES
     }
     
 }
+// function to added a new trigger given the trigger and the automationId
+export async function saveTrigger(automationId:string,trigger:string[]){
+        await onCurrentUser();
+        try{
+            const create=await addTrigger(automationId,trigger);
+            if(create)return {status:200,data:'Trigger Saved'}
+            return {status:404,data:'Cannot Save Trigger'}
+
+        }catch(err){
+            return {status:500}
+        }
+
+}
+
+// function to add a keyword to the db
+export const saveKeyword = async (automationId: string, keyword: string) => {
+    await onCurrentUser()
+    try {
+      const create = await addKeyWord(automationId, keyword)
+  
+      if (create) return { status: 200, data: 'Keyword added successfully' }
+  
+      return { status: 404, data: 'Cannot add this keyword' }
+    } catch (error) {
+      return { status: 500, data: 'Oops! something went wrong' }
+    }
+  }
+
+
+//   function to delete a keyword given its id
+export const deleteKeyword = async (id: string) => {
+    await onCurrentUser()
+    try {
+      const deleted = await deleteKeywordQuery(id)
+      if (deleted)
+        return {
+          status: 200,
+          data: 'Keyword deleted',
+        }
+      return { status: 404, data: 'Keyword not found' }
+    } catch (error) {
+      return { status: 500, data: 'Oops! something went wrong' }
+    }
+  }

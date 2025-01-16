@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import { PencilDuoToneBlack } from "@/icons"
 import { ChevronRight, PencilIcon } from "lucide-react"
 import ActivateAutomationButton from "../../active-automation-button"

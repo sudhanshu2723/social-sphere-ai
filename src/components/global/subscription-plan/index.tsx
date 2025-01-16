@@ -1,3 +1,4 @@
+import { useQueryUser } from "@/hooks/use-queries";
 
 
 
@@ -8,7 +9,10 @@ type Props={
 
 
 export default function SubscriptionPlan({children,type}:Props){
+    // hook used to get the profile Info
+    const {data}=useQueryUser();
     return (
-        <div>{children}</div>
+        // if you are a pro user then only it will render the children
+       data?.data?.subscription?.plan===type && children 
     )
 }

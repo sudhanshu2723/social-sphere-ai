@@ -1,6 +1,6 @@
 import { getAutomationInfo } from "@/actions/automations"
 import Trigger from "@/components/global/automations/trigger"
-import ThenNode from "@/components/global/automations/then/then-action"
+import ThenAction from "@/components/global/automations/then/then-action"
 import AutomationBreadCrumb from "@/components/global/bread-crumbs/automations"
 import { Warning } from "@/icons"
 import { PrefetchUserAutomation } from "@/react-query/prefetch"
