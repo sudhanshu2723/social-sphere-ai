@@ -1,17 +1,58 @@
-"use server"
+'use server'
 
-import { client } from "@/lib/prisma"
+import { client } from '@/lib/prisma'
 
-// function to update the token
-export default async function updateIntegration(token:string,expire:Date,id:string){
-    const updatedToken=await client.integrations.update({
-        where:{
-            id:id 
+export const updateIntegration = async (
+  token: string,
+  expire: Date,
+  id: string
+) => {
+  return await client.integrations.update({
+    where: { id },
+    data: {
+      token,
+      expiresAt: expire,
+    },
+  })
+}
+
+export const getIntegration = async (clerkId: string) => {
+  return await client.user.findUnique({
+    where: {
+      clerkId,
+    },
+    select: {
+      integrations: {
+        where: {
+          name: 'INSTAGRAM',
         },
-        data:{
-            token,
-            expiresAt:expire 
-        }
-    })
-    return updatedToken;
+      },
+    },
+  })
+}
+
+export const createIntegration = async (
+  clerkId: string,
+  token: string,
+  expire: Date,
+  igId?: string
+) => {
+  return await client.user.update({
+    where: {
+      clerkId,
+    },
+    data: {
+      integrations: {
+        create: {
+          token,
+          expiresAt: expire,
+          instagramId: igId,
+        },
+      },
+    },
+    select: {
+      firstname: true,
+      lastname: true,
+    },
+  })
 }

@@ -41,20 +41,25 @@ export async function getAutomations(clerkId:string){
 }
 
 
-export async function findAutomation(id:string){
-    const automation=await client.automation.findUnique({
-        where:{
-            id
+export const findAutomation = async (id: string) => {
+    return await client.automation.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        keywords: true,
+        trigger: true,
+        posts: true,
+        listener: true,
+        User: {
+          select: {
+            subscription: true,
+            integrations: true,
+          },
         },
-        include:{
-            keywords:true,
-            trigger:true,
-            posts:true,
-            listener:true 
-        }
+      },
     })
-    return automation
-}
+  }
 
 
 export async function updateAutomation(id:string,

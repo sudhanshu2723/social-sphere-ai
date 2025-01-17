@@ -14,7 +14,7 @@ const Page = async ({ searchParams: { cancel, session_id } }: Props) => {
   if (session_id) {
     // hook which updates the user subscription plan in DB
     const customer = await onSubscribe(session_id)
-
+// if subscription updation is successful
     if (customer.status === 200) {
       return redirect('/dashboard')
     }

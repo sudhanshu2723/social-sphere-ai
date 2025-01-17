@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation";
 import findUser, { createUser, updateSubscription } from "./queries";
 import { refreshToken } from "@/lib/fetch";
-import updateIntegration from "../integrations/queries";
+import {updateIntegration} from "../integrations/queries";
 import { stripe } from "@/lib/stripe";
 
 // if user existes then return the user otherwise redirect to '/ sign-in' route
@@ -79,6 +79,7 @@ export const onSubscribe = async (session_id: string) => {
     try {
       const session = await stripe.checkout.sessions.retrieve(session_id)
       if (session) {
+        // update user subscription to PRO
         const subscribed = await updateSubscription(user.id, {
           customerId: session.customer as string,
           plan: 'PRO',
