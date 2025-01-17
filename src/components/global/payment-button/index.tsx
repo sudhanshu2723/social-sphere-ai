@@ -1,11 +1,18 @@
+'use client'
 import { Button } from "@/components/ui/button";
+import { useSubscription } from "@/hooks/use-subscription";
+import { isPlainObject } from "@reduxjs/toolkit";
+import { CreditCardIcon, Loader2 } from "lucide-react";
 
 
 
 
 export default function PaymentButton(){
+    // hook used to add subscription 
+    const {onSubscribe,isProcessing}=useSubscription();
+
     return (
-        <Button className="bg-gradient-to-br
+        <Button disabled={isProcessing} onClick={onSubscribe} className="bg-gradient-to-br
         text-white 
         rounded-full 
        from-[#6d60a3] 
@@ -13,7 +20,8 @@ export default function PaymentButton(){
        font-bold 
        to-[#CC3BD4]"
        >
-            Upgrade 
+            {isProcessing ? <Loader2 className="animate-spin" /> : <CreditCardIcon />}
+            Upgrade
         </Button>
     )
 }

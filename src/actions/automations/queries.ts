@@ -140,3 +140,27 @@ export const addTrigger = async (automationId: string, trigger: string[]) => {
       where: { id },
     })
   }
+
+  export const addPost = async (
+    autmationId: string,
+    posts: {
+      postid: string
+      caption?: string
+      media: string
+      mediaType: 'IMAGE' | 'VIDEO' | 'CAROSEL_ALBUM'
+    }[]
+  ) => {
+    return await client.automation.update({
+      where: {
+        id: autmationId,
+      },
+      data: {
+        posts: {
+          createMany: {
+            data: posts,
+          },
+        },
+      },
+    })
+  }
+  

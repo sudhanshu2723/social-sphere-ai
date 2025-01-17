@@ -56,7 +56,7 @@ export default function AutomationBreadCrumb({id}:Props){
                     {/* <p className="text-text-secondary text-sm truncate min-w-0">Undo | Redo</p> */}
                 </div>
             </div>
-            <ActivateAutomationButton/>
+            <ActivateAutomationButton id={id}/>
         </div>
     )
 }

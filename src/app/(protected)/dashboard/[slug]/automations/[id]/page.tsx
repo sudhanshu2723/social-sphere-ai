@@ -5,6 +5,8 @@ import AutomationBreadCrumb from "@/components/global/bread-crumbs/automations"
 import { Warning } from "@/icons"
 import { PrefetchUserAutomation } from "@/react-query/prefetch"
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
+import ThenNode from "@/components/global/automations/then/node"
+import PostNode from "@/components/global/automations/post/node"
 
 
 type Props={
@@ -37,7 +39,7 @@ export default async function Page({params}:Props){
           <Trigger id={params.id} />
         </div>
         <ThenNode id={params.id} />
-        {/* <PostNode id={params.id} /> */}
+        <PostNode id={params.id} />
       </div>
  
       </HydrationBoundary>      
