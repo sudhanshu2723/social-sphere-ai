@@ -11,6 +11,7 @@ type Props = {
 const Page = async ({ searchParams: { code } }: Props) => {
   if (code) {
     console.log(code)
+    console.log("this is code")
     // hook used to integrate user to insta
     const user = await onIntegrate(code.split('#_')[0])
     if (user.status === 200) {
@@ -19,6 +20,7 @@ const Page = async ({ searchParams: { code } }: Props) => {
       )
     }
   }
+  console.log("this is no code")
   return redirect('/sign-up')
 }
 
