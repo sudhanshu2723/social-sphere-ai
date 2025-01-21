@@ -1,5 +1,6 @@
 'use server'
 
+import { error } from "console";
 import { onCurrentUser } from "../user"
 import findUser from "../user/queries";
 import { addKeyWord, addListener, addPost, addTrigger, createAutomation, deleteKeywordQuery, findAutomation, getAutomations, updateAutomation } from "./queries";
@@ -129,10 +130,19 @@ export const deleteKeyword = async (id: string) => {
   export const getProfilePosts = async () => {
     const user = await onCurrentUser()
     try {
+      console.log("geeting all the Profile posts")
       const profile = await findUser(user.id)
-      const posts = await fetch(
+      console.log("prinitng profile")
+      console.log(profile)
+
+      console.log(profile?.integrations[0])
+            const posts = await fetch(
         `${process.env.INSTAGRAM_BASE_URL}/me/media?fields=id,caption,media_url,media_type,timestamp&limit=10&access_token=${profile?.integrations[0].token}`
       )
+      console.log("posts is")
+      console.log(posts)
+   
+ 
       const parsed = await posts.json()
       if (parsed) return { status: 200, data: parsed }
       console.log('🔴 Error in getting posts')

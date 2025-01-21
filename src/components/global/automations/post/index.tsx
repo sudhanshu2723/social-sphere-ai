@@ -10,6 +10,7 @@ import Loader from "../../loader";
 
 
 export default function PostButton({id}:{id:string}){
+  console.log("getting all posts")
     // hook used to get all the posts associated with user Insta
     const {data}=useQueryAutomationPosts();
 // hook used to add  post to the a particular automation given details of automationId and posts

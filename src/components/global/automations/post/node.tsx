@@ -10,6 +10,7 @@ type Props = {
 }
 
 const PostNode = ({ id }: Props) => {
+  console.log("Going to post node")
     // hook used to find keyword,trigger,posts,listener given automationId
   const { data } = useQueryAutomation(id)
 
