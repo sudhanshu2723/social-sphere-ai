@@ -21,6 +21,12 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     // get the webhook payload 
   const webhook_payload = await req.json()
+  if (!webhook_payload || !webhook_payload.entry) {
+    return NextResponse.json(
+      { error: 'Invalid webhook payload' },
+      { status: 400 }
+    );
+  }
   let matcher
   try {
     // first check if the user have given a dm then 
