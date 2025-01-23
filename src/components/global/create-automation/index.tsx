@@ -24,6 +24,7 @@ export default function CreateAutomation(){
         <span className="flex items-center gap-2">
           <AutomationDuoToneWhite />
           <p className="lg:inline hidden">Create an Automation</p>
+        
         </span>
         </Loader>
       </Button>
