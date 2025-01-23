@@ -60,6 +60,7 @@ export const updateSubscription = async (
       where: {
         clerkId,
       },
+     
       data: {
         subscription: {
           update: {
