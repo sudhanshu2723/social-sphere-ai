@@ -10,8 +10,8 @@ type Props = {
 
 const Page = async ({ searchParams: { code } }: Props) => {
   if (code) {
-    console.log(code)
-    console.log("this is code")
+    console.log("code is")
+    console.log(code.split('#_')[0])
     // hook used to integrate user to insta
     const user = await onIntegrate(code.split('#_')[0])
     if (user.status === 200) {

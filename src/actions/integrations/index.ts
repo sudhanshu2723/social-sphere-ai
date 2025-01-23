@@ -14,13 +14,15 @@ export const onOAuthInstagram = (strategy: 'INSTAGRAM' | 'CRM') => {
 
 export const onIntegrate = async (code: string) => {
   const user = await onCurrentUser()
-
+console.log("integrating to instagram")
   try {
     const integration = await getIntegration(user.id)
-
-    if (integration && integration.integrations.length === 0) {
+    console.log("the integration is", integration)
+    if (integration  && integration.integrations.length === 0) {
+        console.log("inside integration")
       const token = await generateTokens(code)
       console.log(token)
+      console.log("after token generation")
 
       if (token) {
         const insta_id = await axios.get(
